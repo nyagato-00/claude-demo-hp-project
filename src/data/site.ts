@@ -10,7 +10,7 @@ export const site = {
 };
 
 // 内部リンクを base（astro.config の base）付きに変換するヘルパー。
-// GitHub Pages のプロジェクトサイトでは base="/claude-course-astro-demo" が付くため、
+// GitHub Pages のプロジェクトサイトでは base="/claude-demo-hp-project" が付くため、
 // 絶対パス（"/service" 等）はそのままだとリンク切れになる。必ずこの url() を通す。
 // 開発時（base 未設定）は BASE_URL="/" なのでそのまま動く。
 export function url(path: string): string {
