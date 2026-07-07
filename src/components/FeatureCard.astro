@@ -1,0 +1,43 @@
+---
+// 設計図 4-3 再利用パーツ「特長カード（アイコン＋見出し＋短文）」。
+// トップの「強み 3 つ」などで使う。
+interface Props {
+  icon: string;
+  title: string;
+}
+
+const { icon, title } = Astro.props;
+---
+
+<div class="card">
+  <div class="card__icon" aria-hidden="true">{icon}</div>
+  <h3 class="card__title">{title}</h3>
+  <p class="card__body"><slot /></p>
+</div>
+
+<style>
+  .card {
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: 28px 24px;
+    box-shadow: var(--shadow);
+    height: 100%;
+  }
+
+  .card__icon {
+    font-size: 2.2rem;
+    line-height: 1;
+    margin-bottom: 0.4em;
+  }
+
+  .card__title {
+    margin: 0 0 0.4em;
+    font-size: 1.2rem;
+  }
+
+  .card__body {
+    margin: 0;
+    color: var(--color-text);
+  }
+</style>

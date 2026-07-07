@@ -1,0 +1,142 @@
+---
+// 設計図 第8節「layouts ＝ ヘッダー＋本文＋フッターの共通枠」。
+// ページ共通の枠と、第7節デザイン方針（配色・可読性）のグローバルスタイルをここで一元管理する。
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { site } from "../data/site";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+const pageTitle = title ? `${title}｜${site.name}` : `${site.name}（${site.tagline}）`;
+const pageDescription =
+  description ??
+  "宮原リハは、伊東市を中心に PT・OT・ST がご自宅へ伺う訪問リハビリテーション事業所です。";
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={pageDescription} />
+    <title>{pageTitle}</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">本文へスキップ</a>
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>
+
+<style is:global>
+  /* 設計図 第7節 デザイン方針：配色・可読性 */
+  :root {
+    --color-main: #2a7f8e; /* メイン：落ち着いた青緑 */
+    --color-main-dark: #21646f; /* ホバー等の濃いめ */
+    --color-accent: #e8833a; /* アクセント：温かみのあるオレンジ */
+    --color-accent-dark: #cf6f2a;
+    --color-text: #333333; /* 本文 */
+    --color-muted: #5f6b6e; /* 補足テキスト */
+    --color-bg: #ffffff;
+    --color-soft: #f3f7f8; /* セクション背景の淡い面 */
+    --color-border: #dfe7e9;
+    --maxw: 960px;
+    --radius: 12px;
+    --shadow: 0 2px 10px rgba(42, 127, 142, 0.08);
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    color: var(--color-text);
+    background: var(--color-bg);
+    /* 本文は大きめ・行間ゆったり（高齢者・ご家族配慮） */
+    font-size: 17px;
+    line-height: 1.8;
+    font-family:
+      "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "Meiryo",
+      system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    line-height: 1.4;
+    color: var(--color-main-dark);
+  }
+
+  a {
+    color: var(--color-main);
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* 共通レイアウトユーティリティ */
+  .container {
+    width: 100%;
+    max-width: var(--maxw);
+    margin-inline: auto;
+    padding-inline: 20px;
+  }
+
+  .section {
+    padding-block: clamp(40px, 7vw, 72px);
+  }
+
+  .section--soft {
+    background: var(--color-soft);
+  }
+
+  /* 設計図 4-3 セクション見出し（全ページ共通の見た目） */
+  .section-heading {
+    font-size: clamp(1.4rem, 4vw, 1.9rem);
+    margin: 0 0 0.6em;
+  }
+
+  .section-lead {
+    margin: 0 auto 2em;
+    max-width: 42em;
+    color: var(--color-muted);
+  }
+
+  .skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    background: var(--color-main);
+    color: #fff;
+    padding: 8px 16px;
+    z-index: 100;
+  }
+  .skip-link:focus {
+    left: 8px;
+    top: 8px;
+  }
+
+  /* キーボード操作時のフォーカスを明確に（アクセシビリティ） */
+  :focus-visible {
+    outline: 3px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+</style>

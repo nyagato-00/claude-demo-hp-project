@@ -1,0 +1,248 @@
+---
+// 設計図 5-2 サービス内容ページ。
+// 構成：訪問リハビリとは / PT・OT・ST の役割 / 訪問でできること・できないこと。
+// コピーは設計図 第6節のガードレール（効果の断定・体験談・比較優良を避ける）に準拠。
+import Layout from "../layouts/Layout.astro";
+import Cta from "../components/Cta.astro";
+
+const roles = [
+  {
+    abbr: "PT",
+    name: "理学療法士",
+    body: "起き上がり・立ち上がり・歩行など、基本的な動作の維持・向上を目指して支援します。",
+  },
+  {
+    abbr: "OT",
+    name: "作業療法士",
+    body: "食事・着替え・トイレ・家事など、日常生活で行う作業に即した練習をサポートします。",
+  },
+  {
+    abbr: "ST",
+    name: "言語聴覚士",
+    body: "話す・聞く・飲み込む（嚥下）といった機能に関する評価や練習を行います。",
+  },
+];
+
+const canDo = [
+  "ご自宅での身体機能・生活動作の評価とリハビリ",
+  "ご家族への介助方法や自主トレーニングの助言",
+  "住環境（手すり・段差など）に関する相談・提案",
+  "ケアマネジャー・主治医との情報共有",
+];
+
+const cannotDo = [
+  "医師の指示・保険の範囲を超えるサービスの提供",
+  "リハビリ以外の家事代行や買い物などの生活援助",
+  "医療行為（診断・投薬など）そのものの実施",
+];
+---
+
+<Layout
+  title="サービス内容"
+  description="宮原リハの訪問リハビリテーションの内容（PT・OT・ST の役割／訪問でできること・できないこと）をご案内します。"
+>
+  <!-- ページ見出し -->
+  <section class="page-head">
+    <div class="container">
+      <h1 class="page-head__title">サービス内容</h1>
+      <p class="page-head__lead">
+        PT・OT・ST がご自宅へ伺い、生活の場でリハビリを行います。
+        どのような支援を行うのかをご案内します。
+      </p>
+    </div>
+  </section>
+
+  <!-- 訪問リハビリとは -->
+  <section class="section">
+    <div class="container narrow">
+      <h2 class="section-heading">訪問リハビリテーションとは</h2>
+      <p>
+        訪問リハビリテーションは、リハビリ専門職がご自宅へ伺い、
+        生活の場で行うリハビリです。退院後の生活への移行や、通院が難しい場合などに、
+        実際に暮らす環境のなかで、起き上がりや歩行、家事といった動作の維持・向上を目指します。
+      </p>
+      <p>
+        ご本人の状態やご希望、主治医の指示をふまえて計画を立て、
+        ご家族やケアマネジャーと連携しながら進めます。
+      </p>
+    </div>
+  </section>
+
+  <!-- PT / OT / ST の役割 -->
+  <section class="section section--soft">
+    <div class="container">
+      <h2 class="section-heading">PT・OT・ST の役割</h2>
+      <p class="section-lead">
+        職種によって専門とする領域が異なります。状態に合わせて連携して関わります。
+      </p>
+      <div class="roles">
+        {
+          roles.map((r) => (
+            <div class="role">
+              <div class="role__abbr">{r.abbr}</div>
+              <div>
+                <h3 class="role__name">{r.name}</h3>
+                <p class="role__body">{r.body}</p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- できること・できないこと -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section-heading">訪問でできること・できないこと</h2>
+      <p class="section-lead">
+        サービスには保険制度や医師の指示にもとづく範囲があります。あらかじめご確認ください。
+      </p>
+      <div class="cols">
+        <div class="panel panel--can">
+          <h3 class="panel__title">できること</h3>
+          <ul>
+            {canDo.map((item) => <li>{item}</li>)}
+          </ul>
+        </div>
+        <div class="panel panel--cannot">
+          <h3 class="panel__title">対応が難しいこと</h3>
+          <ul>
+            {cannotDo.map((item) => <li>{item}</li>)}
+          </ul>
+        </div>
+      </div>
+      <p class="note">
+        ※ 制度や対象範囲は状況により異なります。詳しくはお問い合わせのうえご確認ください。
+      </p>
+    </div>
+  </section>
+
+  <!-- お問い合わせ導線 -->
+  <section class="section contact">
+    <div class="container contact__inner">
+      <h2 class="section-heading">ご利用できるか相談したい方へ</h2>
+      <p class="contact__lead">
+        ご本人の状態やご希望に合うかどうか、まずはお気軽にご相談ください。
+      </p>
+      <div class="actions">
+        <Cta variant="primary" label="相談する" />
+        <Cta variant="phone" />
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .page-head {
+    background: linear-gradient(160deg, #e8f2f3 0%, #f7fbfb 60%);
+    padding-block: clamp(40px, 7vw, 64px);
+  }
+  .page-head__title {
+    margin: 0 0 0.3em;
+    font-size: clamp(1.8rem, 6vw, 2.6rem);
+  }
+  .page-head__lead {
+    margin: 0;
+    max-width: 40em;
+    color: var(--color-muted);
+  }
+
+  .narrow {
+    max-width: 44em;
+  }
+  .narrow p {
+    margin: 0 0 1.2em;
+  }
+
+  .roles {
+    display: grid;
+    gap: 16px;
+  }
+  .role {
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: 20px 22px;
+  }
+  .role__abbr {
+    flex: 0 0 auto;
+    display: grid;
+    place-items: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    background: var(--color-main);
+    color: #fff;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+  }
+  .role__name {
+    margin: 0 0 0.2em;
+    font-size: 1.15rem;
+  }
+  .role__body {
+    margin: 0;
+  }
+
+  .cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  @media (max-width: 720px) {
+    .cols {
+      grid-template-columns: 1fr;
+    }
+  }
+  .panel {
+    border-radius: var(--radius);
+    padding: 22px 24px;
+    border: 1px solid var(--color-border);
+  }
+  .panel--can {
+    background: #eef6f3;
+    border-color: #cfe7df;
+  }
+  .panel--cannot {
+    background: #fbf2ea;
+    border-color: #f0dcc7;
+  }
+  .panel__title {
+    margin: 0 0 0.6em;
+    font-size: 1.15rem;
+  }
+  .panel ul {
+    margin: 0;
+    padding-left: 1.2em;
+  }
+  .panel li {
+    margin-bottom: 0.5em;
+  }
+  .note {
+    margin-top: 1.4em;
+    color: var(--color-muted);
+    font-size: 0.95rem;
+  }
+
+  .contact {
+    background: var(--color-soft);
+  }
+  .contact__inner {
+    text-align: center;
+  }
+  .contact__lead {
+    max-width: 40em;
+    margin: 0 auto 1.6em;
+    color: var(--color-muted);
+  }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    justify-content: center;
+  }
+</style>

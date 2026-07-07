@@ -1,0 +1,266 @@
+---
+// 設計図 5-1 トップページ。
+// セクション構成：ヒーロー / 強み3つ / 対象の方 / ご利用の流れ（要約） / お問い合わせ導線。
+// ナビのアンカー（#flow・#area・#access・#contact）の受け先もこのページに用意する。
+// コピーは設計図 第6節のガードレール（断定・体験談・比較優良・誇大を避け事実ベース）に準拠。
+import Layout from "../layouts/Layout.astro";
+import FeatureCard from "../components/FeatureCard.astro";
+import Cta from "../components/Cta.astro";
+import { site } from "../data/site";
+
+const targets = [
+  "退院後も、ご自宅でリハビリを続けたい方",
+  "通院が負担になってきた方",
+  "要支援・要介護で、在宅での生活動作に不安がある方",
+  "ご家族だけでの介護に不安を感じている方",
+];
+
+const steps = [
+  { no: "1", title: "ご相談", body: "電話・フォームでお問い合わせください。ご状況をお伺いします。" },
+  { no: "2", title: "調整・契約", body: "ケアマネジャーや主治医と連携し、訪問の内容を調整します。" },
+  { no: "3", title: "訪問開始", body: "計画に沿って、PT・OT・ST がご自宅へ伺います。" },
+];
+---
+
+<Layout>
+  <!-- ヒーロー -->
+  <section class="hero">
+    <div class="container hero__inner">
+      <p class="hero__eyebrow">{site.area}の訪問リハビリ</p>
+      <h1 class="hero__title">ご自宅での<br />リハビリを支えます</h1>
+      <p class="hero__lead">
+        {site.name}は、理学療法士（PT）・作業療法士（OT）・言語聴覚士（ST）が
+        ご自宅へ伺う訪問リハビリテーション事業所です。
+        生活の場で、一人ひとりの状態に合わせた支援を行います。
+      </p>
+      <div class="hero__actions">
+        <Cta variant="primary" label="相談する" />
+        <Cta variant="phone" />
+      </div>
+    </div>
+  </section>
+
+  <!-- 強み 3 つ -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section-heading">宮原リハの3つの特長</h2>
+      <div class="grid grid--3">
+        <FeatureCard icon="🧑‍⚕️" title="多職種で支援">
+          PT・OT・ST が在籍し、身体・生活・コミュニケーションの面から多職種で関わります。
+        </FeatureCard>
+        <FeatureCard icon="🏠" title="生活に沿った支援">
+          ご自宅という生活の場で、起き上がりや歩行、家事など実際の動作に即して進めます。
+        </FeatureCard>
+        <FeatureCard icon="🤝" title="医療・介護との連携">
+          主治医やケアマネジャーと情報を共有しながら、在宅での生活を支えます。
+        </FeatureCard>
+      </div>
+    </div>
+  </section>
+
+  <!-- 対象の方 -->
+  <section class="section section--soft">
+    <div class="container">
+      <h2 class="section-heading">こんな方へ</h2>
+      <p class="section-lead">
+        次のようなご希望・お困りごとがある方のご相談を承っています。
+      </p>
+      <ul class="target-list">
+        {targets.map((t) => <li>{t}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <!-- ご利用の流れ（要約） -->
+  <section id="flow" class="section">
+    <div class="container">
+      <h2 class="section-heading">ご利用の流れ</h2>
+      <p class="section-lead">
+        ご相談から訪問開始まで、おおまかに3つのステップで進みます。
+      </p>
+      <ol class="steps">
+        {
+          steps.map((s) => (
+            <li class="steps__item">
+              <span class="steps__no">{s.no}</span>
+              <div>
+                <h3 class="steps__title">{s.title}</h3>
+                <p class="steps__body">{s.body}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <!-- 対応エリア（要約。詳細は今後のページへ） -->
+  <section id="area" class="section section--soft">
+    <div class="container">
+      <h2 class="section-heading">対応エリア・料金について</h2>
+      <p class="section-lead">
+        {site.area}を中心に訪問しています。
+        ご利用には介護保険または医療保険が適用される場合があり、自己負担の区分は状況により異なります。
+        具体的な範囲や費用の目安は、お気軽にお問い合わせください。
+      </p>
+    </div>
+  </section>
+
+  <!-- アクセス・事業所情報 -->
+  <section id="access" class="section">
+    <div class="container">
+      <h2 class="section-heading">事業所情報</h2>
+      <dl class="info">
+        <div><dt>事業所名</dt><dd>{site.name}（{site.tagline}）</dd></div>
+        <div><dt>所在地</dt><dd>{site.address}</dd></div>
+        <div><dt>対応エリア</dt><dd>{site.area}</dd></div>
+        <div><dt>電話</dt><dd>{site.tel}</dd></div>
+        <div><dt>営業時間</dt><dd>{site.hours}</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- お問い合わせ導線（サイトのゴール） -->
+  <section id="contact" class="section contact">
+    <div class="container contact__inner">
+      <h2 class="section-heading">まずはお気軽にご相談ください</h2>
+      <p class="contact__lead">
+        サービス内容や対応エリア、ご利用の可否など、ご不明な点はお電話または相談ボタンからお問い合わせください。
+      </p>
+      <div class="hero__actions">
+        <Cta variant="primary" label="相談する" />
+        <Cta variant="phone" />
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .hero {
+    background: linear-gradient(160deg, #e8f2f3 0%, #f7fbfb 60%);
+    padding-block: clamp(48px, 9vw, 88px);
+  }
+  .hero__eyebrow {
+    margin: 0 0 0.6em;
+    color: var(--color-main);
+    font-weight: 700;
+  }
+  .hero__title {
+    margin: 0 0 0.4em;
+    font-size: clamp(2rem, 7vw, 3.2rem);
+  }
+  .hero__lead {
+    max-width: 36em;
+    margin: 0 0 1.6em;
+    font-size: 1.1rem;
+  }
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+
+  .grid {
+    display: grid;
+    gap: 20px;
+  }
+  .grid--3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @media (max-width: 760px) {
+    .grid--3 {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .target-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 12px;
+    max-width: 44em;
+  }
+  .target-list li {
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-left: 5px solid var(--color-main);
+    border-radius: 8px;
+    padding: 14px 18px;
+  }
+
+  .steps {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 18px;
+    counter-reset: step;
+  }
+  .steps__item {
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: 20px 22px;
+  }
+  .steps__no {
+    flex: 0 0 auto;
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--color-main);
+    color: #fff;
+    font-weight: 800;
+    font-size: 1.2rem;
+  }
+  .steps__title {
+    margin: 0 0 0.2em;
+    font-size: 1.15rem;
+  }
+  .steps__body {
+    margin: 0;
+  }
+
+  .info {
+    margin: 0;
+    display: grid;
+    gap: 10px;
+    max-width: 44em;
+  }
+  .info > div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4em 1.2em;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed var(--color-border);
+  }
+  .info dt {
+    flex: 0 0 7em;
+    font-weight: 700;
+    color: var(--color-main-dark);
+    margin: 0;
+  }
+  .info dd {
+    margin: 0;
+  }
+
+  .contact {
+    background: var(--color-soft);
+  }
+  .contact__inner {
+    text-align: center;
+  }
+  .contact__lead {
+    max-width: 40em;
+    margin: 0 auto 1.6em;
+    color: var(--color-muted);
+  }
+  .contact .hero__actions {
+    justify-content: center;
+  }
+</style>

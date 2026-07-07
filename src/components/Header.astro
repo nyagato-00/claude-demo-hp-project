@@ -1,0 +1,97 @@
+---
+// 設計図 4-1 ヘッダー（共通）：事業所名 / グローバルナビ / 常に見える「相談する」導線。
+import { site, nav, url } from "../data/site";
+import Cta from "./Cta.astro";
+---
+
+<header class="header">
+  <div class="container header__inner">
+    <a class="brand" href={url("/")}>
+      <span class="brand__name">{site.name}</span>
+      <span class="brand__tag">{site.tagline}</span>
+    </a>
+
+    <nav class="gnav" aria-label="グローバルナビ">
+      <ul class="gnav__list">
+        {
+          nav.map((item) => (
+            <li>
+              <a href={url(item.href)}>{item.label}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="header__cta">
+      <Cta variant="primary" label="相談する" />
+    </div>
+  </div>
+</header>
+
+<style>
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .header__inner {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding-block: 12px;
+    flex-wrap: wrap;
+  }
+
+  .brand {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    line-height: 1.2;
+    margin-right: auto;
+  }
+  .brand__name {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--color-main-dark);
+  }
+  .brand__tag {
+    font-size: 0.8rem;
+    color: var(--color-muted);
+  }
+
+  .gnav__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 18px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .gnav a {
+    display: inline-block;
+    padding: 6px 4px;
+    color: var(--color-text);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .gnav a:hover {
+    color: var(--color-main);
+  }
+
+  /* スマホでは CTA を常時表示しつつナビは折り返す */
+  @media (max-width: 720px) {
+    .header__cta {
+      order: 3;
+      width: 100%;
+    }
+    .header__cta :global(.cta) {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>

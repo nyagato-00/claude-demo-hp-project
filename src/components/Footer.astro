@@ -1,0 +1,101 @@
+---
+// 設計図 4-2 フッター（共通）：事業所情報 / ナビ再掲 / 運営者・プライバシーへの一言。
+import { site, nav, url } from "../data/site";
+
+const year = 2026; // ビルド時固定（設計図 第7節の方針に沿い、変わりやすい値は焼き込まない運用）
+---
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <div class="footer__info">
+      <p class="footer__name">{site.name}（{site.tagline}）</p>
+      <dl class="footer__meta">
+        <div><dt>所在地</dt><dd>{site.address}</dd></div>
+        <div><dt>電話</dt><dd>{site.tel}</dd></div>
+        <div><dt>営業時間</dt><dd>{site.hours}</dd></div>
+      </dl>
+    </div>
+
+    <nav class="footer__nav" aria-label="フッターナビ">
+      <ul>
+        {nav.map((item) => <li><a href={url(item.href)}>{item.label}</a></li>)}
+      </ul>
+    </nav>
+  </div>
+
+  <div class="footer__bottom">
+    <div class="container">
+      <p>本サイトは学習用のサンプルです。事業所名・住所・連絡先はすべて架空（ダミー）です。</p>
+      <p>個人情報はお問い合わせ対応の範囲でのみ利用します。</p>
+      <p class="footer__copy">© {year} {site.name}</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    margin-top: 40px;
+    background: var(--color-main-dark);
+    color: #eaf3f4;
+  }
+
+  .footer__inner {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 28px 48px;
+    padding-block: 40px;
+  }
+
+  .footer__name {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin: 0 0 0.6em;
+    color: #fff;
+  }
+
+  .footer__meta {
+    margin: 0;
+  }
+  .footer__meta > div {
+    display: flex;
+    gap: 0.8em;
+    margin-bottom: 0.3em;
+  }
+  .footer__meta dt {
+    flex: 0 0 5em;
+    color: #b9d4d8;
+    margin: 0;
+  }
+  .footer__meta dd {
+    margin: 0;
+  }
+
+  .footer__nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 24px;
+  }
+  .footer__nav a {
+    color: #eaf3f4;
+    text-decoration: none;
+  }
+  .footer__nav a:hover {
+    text-decoration: underline;
+  }
+
+  .footer__bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+    padding-block: 18px;
+    font-size: 0.85rem;
+    color: #c4dadd;
+  }
+  .footer__bottom p {
+    margin: 0.2em 0;
+  }
+  .footer__copy {
+    margin-top: 0.8em !important;
+  }
+</style>
